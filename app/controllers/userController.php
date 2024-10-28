@@ -1053,7 +1053,8 @@ class userController extends mainModel
     /*----------  Controlador exportar lista de usuarios ----------*/
     public function exportarUsuarios()
     {
-        $consulta_datos = "SELECT usuario_nombre, usuario_apellido, usuario_usuario, usuario_email, usuario_tipoUsuario, usuario_creado, usuario_actualizado FROM usuario WHERE usuario_id!='" . $_SESSION['id'] . "' AND usuario_id!='1' ORDER BY usuario_nombre ASC";
+        $consulta_datos = "SELECT usuario_nombre, usuario_apellido, usuario_usuario, usuario_email, usuario_tipoUsuario, usuario_creado, usuario_actualizado 
+        FROM usuario WHERE usuario_id!='" . $_SESSION['id'] . "' AND usuario_id!='1' ORDER BY usuario_nombre ASC";
         $datos = $this->ejecutarConsulta($consulta_datos)->fetchAll();
 
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
