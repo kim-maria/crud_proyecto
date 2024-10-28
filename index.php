@@ -2,11 +2,9 @@
 // Incluye el archivo de configuración principal de la aplicación.
 require_once "./config/app.php";
 // Esto carga el archivo de configuración que probablemente contiene parámetros y ajustes necesarios para la aplicación.
-
 // Incluye el archivo de autoload para cargar clases automáticamente.
 require_once "./autoload.php";
 // Esto permite que las clases sean cargadas automáticamente cuando se instancian, evitando la necesidad de incluir manualmente cada clase.
-
 // Incluye el archivo que inicia la sesión.
 require_once "./app/views/inc/session_start.php";
 // Esto inicia una sesión en PHP, permitiendo el uso de variables de sesión en la aplicación.
