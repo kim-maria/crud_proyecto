@@ -76,25 +76,61 @@ function alertas_ajax(alerta) {
 }
 
 /* Boton cerrar sesion */
-
 let btn_exit = document.getElementById("btn_exit");
+if (btn_exit) {
+  btn_exit.addEventListener("click", function (e) {
+    e.preventDefault();
+    Swal.fire({
+      title: "¿Quieres salir del sistema?",
+      text: "La sesión actual se cerrará y saldrás del sistema",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, salir",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        let url = this.getAttribute("href");
+        window.location.href = url;
+      }
+    });
+  });
+}
 
-btn_exit.addEventListener("click", function (e) {
+const loginForm = document.getElementById("loginForm");
+loginForm.addEventListener("submit", async (e) => {
   e.preventDefault();
-
+  const formData = new FormData(e.target);
+  const action = e.target.getAttribute("action");
+  const request = await fetch(action, {
+    method: "POST",
+    body: formData,
+    redirect: "follow",
+    credentials: "include",
+  });
+  const response = await request.json();
+  if (request.ok) {
+    window.location.href = response.redirect;
+    return;
+  }
   Swal.fire({
-    title: "¿Quieres salir del sistema?",
-    text: "La sesión actual se cerrará y saldrás del sistema",
-    icon: "question",
-    showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "Si, salir",
-    cancelButtonText: "Cancelar",
-  }).then((result) => {
-    if (result.isConfirmed) {
-      let url = this.getAttribute("href");
-      window.location.href = url;
-    }
+    icon: "error",
+    title: "Ocurrió un error inesperado",
+    text: response.message,
+    confirmButtonText: "Aceptar",
   });
 });
+
+/* Funcion cerrar modal */
+function cerrarModalYRedirigir() {
+  var modal = bootstrap.Modal.getInstance(
+    document.querySelector("#loginModal")
+  );
+  modal.hide();
+  document
+    .querySelector("#loginModal")
+    .addEventListener("hidden.bs.modal", function () {
+      window.location.href = "#Contactanos";
+    });
+}
